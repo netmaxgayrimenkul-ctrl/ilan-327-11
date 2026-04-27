@@ -401,10 +401,10 @@ const map = new mapboxgl.Map({
     layers: [],
     glyphs: 'https://api.mapbox.com/fonts/v1/mapbox/{fontstack}/{range}.pbf?access_token=' + mapboxgl.accessToken
   },
-  center: [33.993883, 38.384404],
+  center: [34.008428, 38.364297],
   zoom: 15.5,
   pitch: 0,
-  bearing: 220,
+  bearing: 260,
   attributionControl: false,
   renderWorldCopies: false   // 🔥 EKLE
 });
@@ -420,55 +420,56 @@ let rotation;
 /* ---------------- ROUTE ---------------- */
 
 const route=[
-[33.993883, 38.384404],
-[33.984007, 38.373542],
-[33.959159, 38.356376]
+[34.008428, 38.364297],
+[33.974941, 38.355926],
+[33.963976, 38.349835],
+[33.959228, 38.355741]
 ];
 
 
-const agacliLabelGeoJSON = {
+const belediyeLabelGeoJSON = {
   type: "FeatureCollection",
   features: [
     {
       type: "Feature",
       geometry: {
         type: "Point",
-        coordinates: [33.994293, 38.385091]
+        coordinates: [33.986657, 38.358846]
       },
       properties: {
-        title: "Ağaçlı Tesisleri"
+        title: "Yeni Belediye"
       }
     }
   ]
 };
 
-const hastaneLabelGeoJSON = {
+const terminalLabelGeoJSON = {
   type: "FeatureCollection",
   features: [
     {
       type: "Feature",
       geometry: {
         type: "Point",
-        coordinates: [33.983132, 38.372965]
+        coordinates: [33.983953, 38.358097]
       },
       properties: {
-        title: "Araştırma Hastanesi"
+        title: "Terminal"
       }
     }
   ]
 };
 
-const hobiLabelGeoJSON = {
+const mercedesLabelGeoJSON = {
   type: "FeatureCollection",
   features: [
     {
       type: "Feature",
       geometry: {
         type: "Point",
-        coordinates: [33.973101, 38.367523]
+        coordinates: [33.967001, 38.351097]
       },
       properties: {
-        title: "Hobi Bahçeleri"
+        title: "Mercedes-Benz"
       }
     }
   ]
@@ -490,17 +491,17 @@ const okulLabelGeoJSON = {
   ]
 };
 
-const yolLabelGeoJSON = {
+const kentparkLabelGeoJSON = {
   type: "FeatureCollection",
   features: [
     {
       type: "Feature",
       geometry: {
         type: "Point",
-        coordinates: [33.963869, 38.35132]
+        coordinates: [34.009171, 38.364419]
       },
       properties: {
-        title: "Konya Yolu"
+        title: "Kent Park"
       }
     }
   ]
@@ -611,20 +612,20 @@ if (!map.getLayer('parcels-labels')) {
 }
 
 
-/* AĞAÇLI TESİSLERİ LABEL */
-map.addSource("agacli-label", {
+/* YENİ BELEDİYE LABEL */
+map.addSource("belediye-label", {
   type: "geojson",
-  data: agacliLabelGeoJSON
+  data: belediyeLabelGeoJSON
 });
 
 map.addLayer({
-  id: "agacli-label-layer",
+  id: "belediye-label-layer",
   type: "symbol",
-  source: "agacli-label",
+  source: "belediye-label",
   layout: {
     "text-field": ["get", "title"],
     "text-size": 15,
-    "text-offset": [0, 1.5],
+    "text-offset": [0, 1],
     "text-anchor": "top"
   },
   paint: {
@@ -635,20 +636,20 @@ map.addLayer({
   }
 });
 
-/* HASTANE LABEL */
-map.addSource("hastane-label", {
+/* TERMİNAL LABEL */
+map.addSource("terminal-label", {
   type: "geojson",
-  data: hastaneLabelGeoJSON
+  data: terminalLabelGeoJSON
 });
 
 map.addLayer({
-  id: "hastane-label-layer",
+  id: "terminal-label-layer",
   type: "symbol",
-  source: "hastane-label",
+  source: "terminal-label",
   layout: {
     "text-field": ["get", "title"],
     "text-size": 15,
-    "text-offset": [0, 1.5],
+    "text-offset": [0, 0.5],
     "text-anchor": "top"
   },
   paint: {
@@ -659,16 +660,16 @@ map.addLayer({
   }
 });
 
-/* HOBİ BAHÇELERİ LABEL */
-map.addSource("hobi-label", {
+/* MERCEDES-BENZ LABEL */
+map.addSource("mercedes-label", {
   type: "geojson",
-  data: hobiLabelGeoJSON
+  data: mercedesLabelGeoJSON
 });
 
 map.addLayer({
-  id: "hobi-label-layer",
+  id: "mercedes-label-layer",
   type: "symbol",
-  source: "hobi-label",
+  source: "mercedes-label",
   layout: {
     "text-field": ["get", "title"],
     "text-size": 15,
@@ -707,20 +708,20 @@ map.addLayer({
   }
 });
 
-/* YOL LABEL */
-map.addSource("yol-label", {
+/* KENT PARK LABEL */
+map.addSource("kentpark-label", {
   type: "geojson",
-  data: yolLabelGeoJSON
+  data: kentparkLabelGeoJSON
 });
 
 map.addLayer({
-  id: "yol-label-layer",
+  id: "kentpark-label-layer",
   type: "symbol",
-  source: "yol-label",
+  source: "kentpark-label",
   layout: {
     "text-field": ["get", "title"],
     "text-size": 15,
-    "text-offset": [0, 0],
+    "text-offset": [0, 1.5],
     "text-anchor": "top"
   },
   paint: {
@@ -750,7 +751,7 @@ setTimeout(() => {
   if (!droneMarker) {
 
     const droneEl = document.createElement("img");
-    droneEl.src = "images/VTOL-3.png";
+    droneEl.src = "images/vtol-3.png";
     droneEl.style.width = "115px";
     droneEl.style.height = "auto";
     droneEl.style.opacity = "0";
@@ -1074,6 +1075,13 @@ function startRotation() {
 
     markers = [];
   }
+  
+  const panel = document.getElementById("flightPanel");
+  if (panel) {
+    panel.style.transition = "opacity 800ms ease, transform 800ms ease";
+    panel.style.opacity = "0";
+    panel.style.transform = "translateY(-20px)";
+  }
 
   // =========================
   // DRONE SPIN BAŞLANGICI
@@ -1113,14 +1121,6 @@ function startRotation() {
       // =========================
 
       const fadeDuration = 3000;
-
-      const panel = document.getElementById("flightPanel");
-      if (panel) {
-        panel.style.transition =
-          `opacity ${fadeDuration}ms ease, transform ${fadeDuration}ms ease`;
-        panel.style.opacity = "0";
-        panel.style.transform = "translateY(-20px)";
-      }
 
       if (droneMarker) {
 
